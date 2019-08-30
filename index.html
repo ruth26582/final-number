@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <title>終極密碼</title>
+    <style>
+        hr {
+            background: brown;
+        }
+    </style>
+</head>
+
+<body>
+        <div class="container mt-3">
+            <div class="text-center">
+                <h1>終極密碼</h1>
+                <h3><span id="min">0</span>~<span id="max">100</span><span id="play-span" class="d-none"> 還剩下<span
+                            id="play-counts">10</span>次</span></h3>
+                <input type="text" class="form-control border-0 text-center bg-white" id="input" disabled>
+            </div>
+            <form>
+                <div class="row">
+                    <div class="col-4 text-center">
+                        <hr />
+                        <button type="button" class="btn btn-outline-dark btn-block border-0 input-pad">1</button>
+                        <hr />
+                    </div>
+                    <div class="col-4 text-center">
+                        <hr />
+                        <button type="button" class="btn btn-outline-dark btn-block border-0 input-pad">2</button>
+                        <hr />
+                    </div>
+                    <div class="col-4 text-center">
+                        <hr />
+                        <button type="button" class="btn btn-outline-dark btn-block border-0 input-pad">3</button>
+                        <hr />
+                    </div>
+                    <div class="col-4 text-center">
+                        <hr />
+                        <button type="button" class="btn btn-outline-dark btn-block border-0 input-pad">4</button>
+                        <hr />
+                    </div>
+                    <div class="col-4 text-center">
+                        <hr />
+                        <button type="button" class="btn btn-outline-dark btn-block border-0 input-pad">5</button>
+                        <hr />
+                    </div>
+                    <div class="col-4 text-center">
+                        <hr />
+                        <button type="button" class="btn btn-outline-dark btn-block border-0 input-pad">6</button>
+                        <hr />
+                    </div>
+                    <div class="col-4 text-center">
+                        <hr />
+                        <button type="button" class="btn btn-outline-dark btn-block border-0 input-pad">7</button>
+                        <hr />
+                    </div>
+                    <div class="col-4 text-center">
+                        <hr />
+                        <button type="button" class="btn btn-outline-dark btn-block border-0 input-pad">8</button>
+                        <hr />
+                    </div>
+                    <div class="col-4 text-center">
+                        <hr />
+                        <button type="button" class="btn btn-outline-dark btn-block border-0 input-pad">9</button>
+                        <hr />
+                    </div>
+                    <div class="col-4 text-center">
+                        <hr />
+                        <button type="button" id="check" class="btn btn-outline-success input-pad"><i
+                                class="fas fa-check"></i></button>
+                        <hr />
+                    </div>
+                    <div class="col-4 text-center">
+                        <hr />
+                        <button type="button" class="btn btn-outline-dark btn-block border-0 input-pad">0</button>
+                        <hr />
+                    </div>
+                    <div class="col-4 text-center">
+                        <hr />
+                        <button type="button" id="clear" class="btn btn-outline-danger input-pad"><i
+                                class="fas fa-times-circle"></i></button>
+                        <hr />
+    
+                    </div>
+                    <div class="col-12 text-center">
+                        <button type="button" id="startgame" class="btn btn-outline-primary btn-block btn-lg ">開始遊戲</button>
+                    </div>
+                </div>
+    
+            </form>
+    
+    
+        </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+
+        <script>
+                var ans = "";
+                var btn_StartGame = document.getElementById("startgame");
+                btn_StartGame.onclick = startGame;
+                var playCounts = document.getElementById("play-counts");
+                var inputButtons = document.getElementsByClassName("input-pad");
+                function startGame() {
+                    var playSpan = document.getElementById("play-span");
+                    var max = document.getElementById("max");
+                    var min = document.getElementById("min");
+                    playSpan.classList.replace("d-inline", "d-none");
+                    ans = "";
+                    max.innerHTML = 100;
+                    min.innerHTML = 0;
+                    playCounts.innerHTML = 10;
+                    doClear();
+                    for (var i = 0; i < inputButtons.length; i++) {
+                        inputButtons[i].disabled = false;
+                    }
+                    btn_StartGame.innerHTML = "重新開始";
+                    btn_StartGame.onclick = restartGame;
+                    var number = Math.floor(Math.random() * 100);
+                    console.log(number);
+                    ans = number;
+        
+                }
+                function restartGame() {
+                  
+                    startGame();
+                }
+                function check() {
+                    var input = document.getElementById("input");
+                    var max = document.getElementById("max");
+                    var min = document.getElementById("min");
+                    if (ans > input.value) { 
+                        if(input.value - ans > min.innerHTML - ans){
+                            min.innerHTML = input.value;
+                            playCounts.innerHTML = playCounts.innerHTML - 1;
+                            doClear();
+                            isFail();
+                        }
+                        else{
+                            playCounts.innerHTML = playCounts.innerHTML - 1;
+                            doClear();
+                            isFail();
+                        }              
+                       
+                    }
+                    else if (ans == input.value) {
+        
+                        input.value = "答對了!繼續玩請重新開始!";
+                        playCounts.innerHTML = playCounts.innerHTML - 1;
+                        stopGame();
+                    }
+                    else {
+                        if(input.value-ans< max.innerHTML-ans){
+                            max.innerHTML = input.value;
+                            playCounts.innerHTML = playCounts.innerHTML - 1;
+                            doClear();
+                            isFail();
+                        }
+                        else{
+                            playCounts.innerHTML = playCounts.innerHTML - 1;
+                            doClear();
+                            isFail();
+                        }
+                       
+                    }
+        
+                    
+                }
+                function isFail() {
+                    if (playCounts.innerHTML == 0) {
+                        input.value = "挑戰失敗!繼續玩請重新開始!";
+                        stopGame();
+                    }
+        
+                }
+        
+                function doGuess() {
+                    var input = document.getElementById("input");
+                    var playSpan = document.getElementById("play-span")
+        
+                    if (input.value.length == 0) {
+                        alert("沒有輸入數字!");
+                        return;
+                    }
+        
+        
+                    if (playCounts.innerHTML == 10) {
+        
+                        playSpan.classList.replace("d-none", "d-inline");
+                        check();
+        
+                    }
+                    else if (playCounts.innerHTML < 10) {
+                        check();
+                    }
+                }
+                function doClear() {
+                    var input = document.getElementById("input");
+                    input.value = "";
+                }
+                function inputButton() {
+                    var input = document.getElementById("input");
+                    var text = this.innerHTML;
+                    if (input.value.length < 3) {
+                        var temp_input= +(input.value +text);
+                        console.log("temp_input="+ temp_input);
+                        if(temp_input <=100 || input.value.length==0){
+                            input.value += text;
+                        }
+                        else{
+                            console.warn("超過100!");
+                        }
+                        
+                    }
+                }
+                function stopGame() {
+                    for (var i = 0; i < inputButtons.length; i++) {
+                        inputButtons[i].disabled = true;
+                    }
+        
+                }
+        
+                for (var i = 0; i < inputButtons.length; i++) {
+                    inputButtons[i].onclick = inputButton;
+                }
+                stopGame();
+     
+                var btn_Clear = document.getElementById("clear");
+                btn_Clear.onclick = doClear;
+                var btn_Check = document.getElementById("check");
+                btn_Check.onclick = doGuess;
+            </script>
+
+</body>
+
+</html>
